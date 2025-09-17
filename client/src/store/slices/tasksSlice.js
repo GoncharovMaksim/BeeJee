@@ -65,7 +65,6 @@ const slice = createSlice({
       })
       .addCase(createTask.fulfilled, (state, action) => {
         state.items.unshift(action.payload);
-        // Держим количество элементов страницы равным pageSize
         if (state.items.length > state.pagination.pageSize) {
           state.items.pop();
         }

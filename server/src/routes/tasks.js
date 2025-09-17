@@ -6,7 +6,6 @@ const { requireAdmin } = require("../middleware/auth");
 
 const router = express.Router();
 
-// GET /tasks?sortBy=userName|userEmail|isCompleted&order=asc|desc&page=1&pageSize=3
 router.get("/", async (req, res) => {
   try {
     const page = Math.max(parseInt(req.query.page || "1", 10), 1);
@@ -52,7 +51,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// POST /tasks
 router.post("/", async (req, res) => {
   try {
     const parsed = createTaskSchema.safeParse(req.body);
@@ -69,7 +67,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PATCH /tasks/:id (admin)
 router.patch("/:id", requireAdmin, async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);

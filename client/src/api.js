@@ -1,6 +1,4 @@
 import axios from "axios";
-
-// Fallback к продакшен API, если VITE_API_URL не задан на Render
 const baseURL =
   (import.meta?.env && import.meta.env.VITE_API_URL) ||
   "https://beejee-thrw.onrender.com";
