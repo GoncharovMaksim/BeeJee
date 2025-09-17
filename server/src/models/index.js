@@ -1,14 +1,15 @@
-const { Sequelize } = require("sequelize");
-const path = require("path");
+const { Sequelize } = require('sequelize');
 
-const databasePath = path.join(__dirname, "../../data.sqlite");
+const sequelize = new Sequelize(
+	'beejee',
+	'beejee_user',
+	'YOUR_PASSWORD',
+	{
+		host: 'dpg-d359q0e3jp1c73esmcrg-a',
+		port: 5432,
+		dialect: 'postgres',
+		logging: false,
+	}
+);
 
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: databasePath,
-  logging: false,
-});
-
-module.exports = {
-  sequelize,
-};
+module.exports = { sequelize };
