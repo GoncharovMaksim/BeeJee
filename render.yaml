@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: beejee-api
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm ci
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: CORS_ORIGIN
+        sync: false
+  - type: static_site
+    name: beejee-client
+    plan: free
+    rootDir: client
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    autoDeploy: true
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: beejee-api
+          envVarKey: RENDER_EXTERNAL_URL
