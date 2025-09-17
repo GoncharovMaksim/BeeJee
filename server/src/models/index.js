@@ -1,14 +1,21 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 const sequelize = new Sequelize(
-	'beejee',
-	'beejee_user',
-	'YOUR_PASSWORD',
+	process.env.DB_NAME,
+	process.env.DB_USER,
+	process.env.DB_PASSWORD,
 	{
-		host: 'dpg-d359q0e3jp1c73esmcrg-a',
-		port: 5432,
+		host: process.env.DB_HOST,
+		port: process.env.DB_PORT,
 		dialect: 'postgres',
 		logging: false,
+		dialectOptions: {
+			ssl: {
+				require: true,
+				rejectUnauthorized: false,
+			},
+		},
 	}
 );
 
