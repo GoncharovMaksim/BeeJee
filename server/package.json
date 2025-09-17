@@ -18,7 +18,8 @@
 		"jsonwebtoken": "^9.0.2",
 		"sequelize": "^6.37.7",
 		"sqlite3": "^5.1.7",
-		"zod": "^4.1.9"
+		"zod": "^4.1.9",
+		"pg": "^8.11.3"
 	},
 	"devDependencies": {
 		"nodemon": "^3.1.10"
