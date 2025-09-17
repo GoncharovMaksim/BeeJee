@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-
-axios.defaults.withCredentials = true;
+import api from "../../api";
 
 export const fetchMe = createAsyncThunk("auth/fetchMe", async () => {
-  const { data } = await axios.get("/api/auth/me");
+  const { data } = await api.get("/api/auth/me");
   return data;
 });
 
@@ -12,7 +10,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async ({ username, password }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post("/api/auth/login", {
+      const { data } = await api.post("/api/auth/login", {
         username,
         password,
       });
@@ -24,7 +22,7 @@ export const login = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  const { data } = await axios.post("/api/auth/logout");
+  const { data } = await api.post("/api/auth/logout");
   return data;
 });
 

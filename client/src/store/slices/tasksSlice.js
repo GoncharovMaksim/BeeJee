@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-
-axios.defaults.withCredentials = true;
+import api from "../../api";
 
 export const fetchTasks = createAsyncThunk("tasks/fetch", async (params) => {
-  const { data } = await axios.get("/api/tasks", { params });
+  const { data } = await api.get("/api/tasks", { params });
   return data;
 });
 
@@ -12,7 +10,7 @@ export const createTask = createAsyncThunk(
   "tasks/create",
   async (payload, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post("/api/tasks", payload);
+      const { data } = await api.post("/api/tasks", payload);
       return data.item;
     } catch (e) {
       return rejectWithValue(e.response?.data || { message: "Ошибка" });
@@ -24,7 +22,7 @@ export const updateTask = createAsyncThunk(
   "tasks/update",
   async ({ id, updates }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.patch(`/api/tasks/${id}`, updates);
+      const { data } = await api.patch(`/api/tasks/${id}`, updates);
       return data.item;
     } catch (e) {
       return rejectWithValue(e.response?.data || { message: "Ошибка" });
