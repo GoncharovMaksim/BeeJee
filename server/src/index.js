@@ -8,7 +8,20 @@ const authRouter = require("./routes/auth");
 const app = express();
 
 const allowedOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
-app.use(cors({ origin: allowedOrigin, credentials: true }));
+const extraOrigins = (process.env.CORS_EXTRA_ORIGINS || "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+const origins = [allowedOrigin, ...extraOrigins];
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || origins.includes(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
