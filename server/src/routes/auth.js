@@ -15,17 +15,25 @@ router.post("/login", (req, res) => {
   const token = jwt.sign({ role: "admin", name: "admin" }, JWT_SECRET, {
     expiresIn: "2h",
   });
+  const isProd =
+    process.env.RENDER === "true" || process.env.NODE_ENV === "production";
   res.cookie(COOKIE_NAME, token, {
     httpOnly: true,
-    sameSite: "lax",
-    secure: false,
+    sameSite: isProd ? "none" : "lax",
+    secure: isProd,
     maxAge: 2 * 60 * 60 * 1000,
   });
   return res.json({ ok: true });
 });
 
 router.post("/logout", (req, res) => {
-  res.clearCookie(COOKIE_NAME);
+  const isProd =
+    process.env.RENDER === "true" || process.env.NODE_ENV === "production";
+  res.clearCookie(COOKIE_NAME, {
+    httpOnly: true,
+    sameSite: isProd ? "none" : "lax",
+    secure: isProd,
+  });
   return res.json({ ok: true });
 });
 
